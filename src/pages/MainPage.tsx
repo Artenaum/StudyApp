@@ -23,8 +23,13 @@ const MainPage = () => {
 				<Toolbar sx={{alignItems: 'center'}}>
 					<Typography variant="h4" sx={{flexGrow: 1}}>КУРСЫ</Typography>
 
-					<Button variant="contained" color="info" sx={{marginRight: '20px'}}>Создать курс</Button>
-					<Button variant="contained" color="info">Создать модуль</Button>
+					<Button variant="contained" color="info" 
+						sx={{marginRight: '20px'}}
+						onClick={() => navigate('/createCourse')}
+					>Создать курс</Button>
+					<Button variant="contained" color="info" 
+						onClick={() => navigate('/createModule')}
+					>Создать модуль</Button>
 				</Toolbar>
 			</AppBar>
 
