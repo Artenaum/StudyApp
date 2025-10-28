@@ -25,6 +25,30 @@ export const fetchCourses = createAsyncThunk(
 	}
 )
 
+export const createCourse = createAsyncThunk(
+	'course/createCourse',
+	async function(course: Course, {rejectWithValue}) {
+		try {
+			const response = await fetch('http://localhost:3000/courses', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(course)
+			})
+
+			if (!response.ok) {
+				throw new Error('Cannot create course. Server error.')
+			}
+
+			const data = await response.json()
+			return data
+		} catch (error: any) {
+			return rejectWithValue(error.message)
+		}
+	}
+)
+
 export const coursesSlice = createSlice({
 	name: 'course',
 	initialState: {
