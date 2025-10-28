@@ -1,20 +1,36 @@
-import { AppBar, Button, List, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material"
+import { Alert, AppBar, Button, List, ListItemButton, ListItemText, Snackbar, Toolbar, Typography, type SnackbarCloseReason } from "@mui/material"
 import { useEffect, useState } from "react"
 import type { Course } from "../types/types"
-import { useNavigate } from "react-router"
+import { useNavigate, useSearchParams } from "react-router"
 import { useAppDispatch, useAppSelector } from "../app/store"
 import { fetchCourses } from "../app/coursesSlice"
 import { fetchModules } from "../app/modulesSlice"
 
 const MainPage = () => {
 	const navigate = useNavigate()
+	let [searchParams] = useSearchParams()
+	const [open, setOpen] = useState(false)
 	const {courses, status, error} = useAppSelector(state => state.course)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		dispatch(fetchCourses())
 		dispatch(fetchModules())
+
+		console.log(searchParams)
+		if (searchParams.size !== 0) setOpen(true)
 	}, [])
+
+	const handleClose = (
+		event?: React.SyntheticEvent | Event,
+		reason?: SnackbarCloseReason,
+	) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpen(false)
+	}
 
 	return (
 		<>
@@ -58,6 +74,17 @@ const MainPage = () => {
 					))
 				}
 			</List>
+			<Snackbar
+				open={open}
+				autoHideDuration={5000}
+				onClose={handleClose}
+			>
+				<Alert severity="success" onClose={handleClose} variant="filled">
+					{searchParams.get('addedCourse') === 'true' 
+					? 'Добавлен новый курс' 
+					: 'Добавлен новый модуль'}
+				</Alert>
+			</Snackbar>
 		</>
 	)
 }
