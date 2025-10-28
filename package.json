@@ -7,11 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server public/db.json"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
     "@mui/styled-engine": "^7.3.3",
     "@reduxjs/toolkit": "^2.9.2",
