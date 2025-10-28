@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import type { PayloadAction } from "@reduxjs/toolkit"
 import type { Module } from "../types/types"
 
 interface ModulesData {
@@ -19,6 +18,30 @@ export const fetchModules = createAsyncThunk(
 			}
 
 			const data = response.json()
+			return data
+		} catch (error: any) {
+			return rejectWithValue(error.message)
+		}
+	}
+)
+
+export const createModule = createAsyncThunk(
+	'modules/createModule',
+	async function(module: Module, {rejectWithValue}) {
+		try {
+			const response = await fetch('http://localhost:3000/modules', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(module)
+			})
+
+			if (!response.ok) {
+				throw new Error('Cannot create module. Server error.')
+			}
+
+			const data = await response.json()
 			return data
 		} catch (error: any) {
 			return rejectWithValue(error.message)
