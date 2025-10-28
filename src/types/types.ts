@@ -1,5 +1,5 @@
 interface BaseObj {
-	id: number,
+	id: string,
 	title: string,
 	description: string
 }
@@ -10,5 +10,5 @@ export interface Course extends BaseObj {
 }
 
 export interface Module extends BaseObj {
-	courseId: number
+	courseId: string
 }

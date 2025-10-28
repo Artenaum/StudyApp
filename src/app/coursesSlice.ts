@@ -1,27 +1,54 @@
-import { createSlice } from "@reduxjs/toolkit"
-import type { PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { Course } from "../types/types"
 
-const initialState: Course = {
-	id: 0,
-	name: '',
-	description: '',
-	imageUrl: '',
-	category: ''
+interface CoursesData {
+	courses: Course[]
+	status: string
+	error: string
 }
+
+export const fetchCourses = createAsyncThunk(
+	'course/fetchCourses',
+	async function(_, {rejectWithValue}) {
+		try {
+			const response = await fetch('http://localhost:3000/courses')
+
+			if (!response.ok) {
+				throw new Error('Server Error!')
+			}
+
+			const data = await response.json()
+			return data
+		} catch (error: any) {
+			return rejectWithValue(error.message)
+		}
+	}
+)
 
 export const coursesSlice = createSlice({
 	name: 'course',
-	initialState,
-	reducers: {
-		setName: (state, action: PayloadAction<string>) => {
-			state.name = action.payload
-		},
-		setDescription: (state, action: PayloadAction<string>) => {
-			state.description = action.payload
-		}
+	initialState: {
+		courses: [],
+		status: 'loading',
+		error: '',
+	} satisfies CoursesData as CoursesData,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchCourses.pending, (state) => {
+				state.status = 'loading'
+				state.error = ''
+			})
+			.addCase(fetchCourses.fulfilled, (state, action) => {
+				state.status = 'resolved'
+				state.courses = action.payload
+			})
+			.addCase(fetchCourses.rejected, (state, action) => {
+				state.status = 'rejected'
+				state.error = String(action.payload)
+			})
 	}
 })
 
-export const { setName, setDescription } = coursesSlice.actions
+//export const { setName, setDescription } = coursesSlice.actions
 export default coursesSlice.reducer

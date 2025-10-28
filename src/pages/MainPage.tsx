@@ -2,19 +2,18 @@ import { AppBar, Button, List, ListItemButton, ListItemText, Toolbar, Typography
 import { useEffect, useState } from "react"
 import type { Course } from "../types/types"
 import { useNavigate } from "react-router"
+import { useAppDispatch, useAppSelector } from "../app/store"
+import { fetchCourses } from "../app/coursesSlice"
+import { fetchModules } from "../app/modulesSlice"
 
 const MainPage = () => {
-	const [courses, setCourses] = useState<Course[]>()
 	const navigate = useNavigate()
+	const {courses, status, error} = useAppSelector(state => state.course)
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		const fetchCourses = async () => {
-			const response = await fetch('http://localhost:3000/courses')
-			const data = await response.json()
-			setCourses(data)
-		}
-
-		fetchCourses()
+		dispatch(fetchCourses())
+		dispatch(fetchModules())
 	}, [])
 
 	return (
