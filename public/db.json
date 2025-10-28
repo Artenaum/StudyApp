@@ -34,6 +34,13 @@
       "description": "Курс 2",
       "imageUrl": "",
       "category": ""
+    },
+    {
+      "id": "e767",
+      "title": "Курс 3",
+      "description": "Курс 3",
+      "imageUrl": "",
+      "category": ""
     }
   ],
   "modules": [
@@ -78,6 +85,12 @@
       "title": "Модуль 3",
       "description": "Это модуль 3",
       "courseId": "1e22"
+    },
+    {
+      "id": "eb24",
+      "title": "Модуль 4",
+      "description": "Это модуль 4",
+      "courseId": "e767"
     }
   ]
 }

@@ -32,7 +32,7 @@ const CreateCourseForm = () => {
 
 		const resp = await dispatch(createCourse(course))
 
-		if (resp) navigate('/') 
+		if (resp) navigate('/?addedCourse=true')
 	}
 
 	return (

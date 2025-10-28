@@ -35,7 +35,7 @@ const CreateModuleForm = () => {
 
 		const resp = await dispatch(createModule(module))
 		
-		if (resp) navigate('/')
+		if (resp) navigate('/?addedCourse=false')
 	}
 
 	return (
