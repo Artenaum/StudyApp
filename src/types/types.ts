@@ -1,5 +1,5 @@
 interface BaseObj {
-	id: string,
+	id?: string,
 	title: string,
 	description: string
 }
